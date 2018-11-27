@@ -43,6 +43,11 @@ dependencies {
     compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-jdk8', version: '1.0.1'
     compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.0.1'
     
+    // Logging
+    implementation 'io.github.microutils:kotlin-logging:1.6.20'
+    // Enable for applications
+    //runtime 'ch.qos.logback:logback-classic:1.2.3'
+    
     // Junit
     testCompile("org.junit.jupiter:junit-jupiter-api:5.3.1")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.3.1")

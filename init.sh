@@ -1,6 +1,7 @@
 #!/bin/env bash
 mkdir ../$1 || exit
-cp --parents -rvn $(git ls-files|grep -v $0) ../$1 &&
+this=$(basename "$0")
+cp --parents -rvn $(git ls-files|grep -v $this) ../$1 &&
 cd ../$1 &&
 git init &&
 user=$(git config --global credential.git@github.com.username)

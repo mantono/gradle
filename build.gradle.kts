@@ -33,7 +33,7 @@ repositories {
 
 dependencies {
 	implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", version("kotlin"))
-	implementation("com.github.mantono", "ask-nicely", "53488ff4a")
+	implementation("com.github.mantono", "ask-nicely", "e3f5ac2")
 }
 
 tasks {

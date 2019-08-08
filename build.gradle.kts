@@ -1,5 +1,5 @@
 fun version(artifact: String): String {
-	val key: String = "version.${artifact.toLowerCase()}"
+	val key = "version.${artifact.toLowerCase()}"
 	return project.ext[key]?.toString()
 		?: throw IllegalStateException("No version found for artifact '$artifact'")
 }
@@ -43,12 +43,14 @@ dependencies {
 	// runtime("ch.qos.logback", "logback-classic", "1.2.3")
 
 	// Ktor
-	implementation(platform("io.ktor:ktor-server-core:${version("ktor")}"))
-	implementation("io.ktor", "ktor-server-netty", version("ktor"))
-	implementation("io.ktor", "ktor-client-auth-basic", version("ktor"))
-	implementation("io.ktor", "ktor-auth", version("ktor"))
-	implementation("io.ktor", "ktor-jackson", version("ktor"))
-	implementation("io.ktor", "ktor-auth-jwt", version("ktor"))
+	version("ktor").let { ktor ->
+		implementation(platform("io.ktor:ktor-server-core:$ktor"))
+		implementation("io.ktor", "ktor-server-netty", ktor)
+		implementation("io.ktor", "ktor-client-auth-basic", ktor)
+		implementation("io.ktor", "ktor-auth", ktor)
+		implementation("io.ktor", "ktor-jackson", ktor)
+		implementation("io.ktor", "ktor-auth-jwt", ktor)
+	}
 
 	// Jackson
 	implementation(platform("com.fasterxml.jackson:jackson-bom:2.9.9"))

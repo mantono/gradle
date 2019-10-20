@@ -4,14 +4,17 @@ fun version(artifact: String): String {
 		?: throw IllegalStateException("No version found for artifact '$artifact'")
 }
 
+fun projectName(): String = project.name.replace("{", "").replace("}", "")
+
 plugins {
 	id("io.gitlab.arturbosch.detekt") version "1.0.0.RC6-2"
 	id("org.jmailen.kotlinter") version "1.21.0"
 	id("org.sonarqube") version "2.6.2"
 	id("application") apply true
-	id("org.jetbrains.kotlin.jvm") version "1.3.21" apply true
+	id("org.jetbrains.kotlin.jvm") version "1.3.50" apply true
 	id("java") apply true
 	id("maven") apply true
+	id("maven-publish")
 	id("idea") apply true
 }
 
@@ -29,6 +32,7 @@ repositories {
 	mavenLocal()
 	jcenter()
 	mavenCentral()
+	maven(url = "https://maven.pkg.github.com/")
 	maven(url = "https://dl.bintray.com/kotlin/ktor")
 	maven(url = "https://jitpack.io")
 }
@@ -66,6 +70,27 @@ dependencies {
 	// Junit
 	testCompile("org.junit.jupiter", "junit-jupiter-api", version("junit"))
 	testRuntime("org.junit.jupiter", "junit-jupiter-engine", version("junit"))
+}
+
+publishing {
+	repositories {
+		maven {
+			name = "GithubPackages"
+			url = uri("https://maven.pkg.github.com/mantono/${projectName()}")
+			credentials {
+				username = "mantono"
+				password = System.getenv("GITHUB_TOKEN")
+			}
+		}
+	}
+	publications {
+		register("gpr", MavenPublication::class) {
+			this.artifactId = projectName()
+			this.groupId = project.group.toString()
+			this.version = project.version.toString()
+			from(components["java"])
+		}
+	}
 }
 
 tasks {

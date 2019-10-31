@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.javax.inject.Inject
+
 fun version(artifact: String): String {
 	val key = "version.${artifact.toLowerCase()}"
 	return project.ext[key]?.toString()
@@ -120,3 +122,45 @@ tasks {
 		gradleVersion = version("gradle")
 	}
 }
+
+class GitHub: Plugin<Project> {
+	override fun apply(target: Project) {
+		val extension = project.extensions.create<GitHubConfiguration>("config")
+		github(extension.mapping)
+	}
+
+	fun github(mapping: Map<String, String>) {
+		project.configurations.asSequence()
+			.map { it.allDependencies.asSequence() }
+			.flatten()
+			.onEach { println(it) }
+			.filter { it.group in mapping }
+			.forEach {
+				val group: String = it.group ?: ""
+				val organization: String = mapping[group] ?: ""
+				println("$group -> $organization")
+				setupGithub(organization, it)
+			}
+	}
+
+	fun setupGithub(
+		gitHubOrganization: String,
+		dependency: Dependency
+	) {
+		val repo = "$gitHubOrganization/${dependency.name}"
+		project.repositories.maven(url = "https://maven.pkg.github.com/$repo") {
+			credentials {
+				username = this.username
+				password = this.password
+			}
+		}
+	}
+}
+
+open class GitHubConfiguration {
+	var username: String? = System.getenv("GITHUB_USER")
+	var token: String? = System.getenv("GITHUB_TOKEN")
+	var mapping: Map<String, String> = HashMap(0)
+}
+
+apply<GitHub>()

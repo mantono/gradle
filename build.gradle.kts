@@ -13,7 +13,6 @@ plugins {
 	id("application") apply true
 	id("org.jetbrains.kotlin.jvm") version "1.3.50" apply true
 	id("java") apply true
-	id("maven") apply true
 	id("maven-publish")
 	id("idea") apply true
 }
@@ -68,8 +67,8 @@ dependencies {
 	implementation("com.squareup.okhttp3:okhttp:3.14.2")
 
 	// Junit
-	testCompile("org.junit.jupiter", "junit-jupiter-api", version("junit"))
-	testRuntime("org.junit.jupiter", "junit-jupiter-engine", version("junit"))
+	testImplementation("org.junit.jupiter", "junit-jupiter-api", version("junit"))
+	testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", version("junit"))
 }
 
 publishing {

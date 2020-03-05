@@ -11,7 +11,7 @@ plugins {
 	id("org.jmailen.kotlinter") version "1.21.0"
 	id("org.sonarqube") version "2.6.2"
 	id("application") apply true
-	id("org.jetbrains.kotlin.jvm") version "1.3.50" apply true
+	id("org.jetbrains.kotlin.jvm") version "1.3.70" apply true
 	id("java") apply true
 	id("maven-publish")
 	id("idea") apply true

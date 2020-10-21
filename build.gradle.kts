@@ -8,7 +8,7 @@ fun projectName(): String = project.name.replace("{", "").replace("}", "")
 
 plugins {
 	id("io.gitlab.arturbosch.detekt") version "1.0.0.RC6-2"
-	id("org.jmailen.kotlinter") version "1.21.0"
+	id("org.jmailen.kotlinter") version "3.2.0"
 	id("org.sonarqube") version "2.6.2"
 	id("application") apply true
 	id("org.jetbrains.kotlin.jvm") version "1.3.70" apply true
@@ -37,8 +37,8 @@ repositories {
 }
 
 dependencies {
-	implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
-	implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-jdk8")
+	implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", version("kotlin"))
+	implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-jdk8", version("coroutines"))
 	
 	// Logging
 	implementation("io.github.microutils", "kotlin-logging", "1.6.20")
